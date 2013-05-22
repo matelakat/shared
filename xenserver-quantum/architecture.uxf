@@ -189,7 +189,7 @@ bg=cyan
     <type>com.umlet.element.Note</type>
     <coordinates>
       <x>110</x>
-      <y>320</y>
+      <y>350</y>
       <w>230</w>
       <h>50</h>
     </coordinates>
@@ -248,35 +248,11 @@ in cyan
     <coordinates>
       <x>770</x>
       <y>540</y>
-      <w>140</w>
+      <w>170</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>vm1: Tenant VM
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>770</x>
-      <y>580</y>
-      <w>140</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>vm2: Tenant VM
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>770</x>
-      <y>650</y>
-      <w>140</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>vmn: Tenant VM
-</panel_attributes>
+    <panel_attributes>vifC.D: Dom0 device
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -321,6 +297,45 @@ in cyan
       <h>30</h>
     </coordinates>
     <panel_attributes>...</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>580</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>vifE.F: Dom0 device
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>650</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>vifS.T: Dom0 device
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>960</x>
+      <y>600</y>
+      <w>150</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+NOTE: tenant VM
+related dom0
+devices in yellow
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
