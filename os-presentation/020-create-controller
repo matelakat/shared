@@ -1,0 +1,14 @@
+#!>>
+#!Describes how a controller is created
+#!<<
+
+#![Create servers controller]
+
+router:nova.api.openstack.compute:APIRouter[a]
+servers:nova.api.openstack.compute.servers[a]
+/controller:nova.api.openstack.compute.servers.Controller
+/resource:nova.api.openstack.wsgi.Resource
+
+router:resource=servers.create_resource()
+servers:controller.new()
+servers:resource.new(controller)

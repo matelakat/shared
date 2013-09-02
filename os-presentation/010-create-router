@@ -1,0 +1,41 @@
+#!>>
+#!Describes how an API server is started, demonstrated through n-api
+#!<<
+
+#![Start an API server]
+
+user:User[a]
+cmd_api:nova.cmd.api[a]
+/wsgiservice:service.WSGIService[a]
+/loader:wsgi.Loader[a]
+deploy:paste.deploy[a]
+
+user:cmd_api.main()
+cmd_api:wsgiservice.new(name='osapi_compute')
+wsgiservice:loader.new()
+wsgiservice:app=loader.load_app('osapi_compute')
+*1 loader
+in /etc/nova/nova.conf:
+api_paste_config = /etc/nova/api-paste.ini
+*1
+loader:deploy.loadapp('config\:' + CONF.api_paste_config, name='osapi-compute')
+*1 deploy
+in /etc/nova/api-paste.ini:
+...
+[composite:osapi_compute]
+use = ...
+/: oscomputeversions
+/v1.1: ...
+/v2: openstack_compute_api_v2
+/v3: ...
+...
+[composite:openstack_compute_api_v2]
+use = ...
+noauth = ... osapi_compute_app_v2
+keystone = ... osapi_compute_app_v2
+keystone_nolimit = ... osapi_compute_app_v2
+...
+[app:osapi_compute_app_v2]
+paste.app_factory = nova.api.openstack.compute:APIRouter.factory
+...
+*1
