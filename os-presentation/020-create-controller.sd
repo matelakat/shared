@@ -1,5 +1,13 @@
 #!>>
-#!Describes how a controller is created
+#!Describes how a controller is created. It also describes how cells come to play.
+#!
+#! If cells are enabled, the API class will be 
+#!    nova.compute.cells_api.ComputeCellsAPI
+#! otherwise:
+#!    nova.compute.api.API
+#!
+#! The example shows the case where cells are disabled. 
+#!
 #!<<
 
 #![Create servers controller]
@@ -7,8 +15,44 @@
 router:nova.api.openstack.compute:APIRouter[a]
 servers:nova.api.openstack.compute.servers[a]
 /controller:nova.api.openstack.compute.servers.Controller
+compute:nova.compute[a]
+cellopts:nova.cell.opts[a]
+/api:nova.compute.api.API
 /resource:nova.api.openstack.wsgi.Resource
 
 router:resource=servers.create_resource()
 servers:controller.new()
+controller:compute_api=compute.API()
+compute:compute_class=compute._get_compute_api_class_name()
+*1 compute
+CELL_TYPE_TO_CLS_NAME = {
+  'api': 'nova.compute.cells_api.ComputeCellsAPI',
+  'compute': 'nova.compute.api.API',
+  None: 'nova.compute.api.API',
+}
+
+
+def _get_compute_api_class_name():
+    """Returns the name of compute API class."""
+    cell_type = nova.cells.opts.get_cell_type()
+    return CELL_TYPE_TO_CLS_NAME[cell_type]
+*1
+compute:cellopts.get_cell_type()
+*1 cellopts
+def get_cell_type():
+    """Return the cell type, 'api', 'compute', or None (if cells is disabled).
+
+    This call really exists just to support the deprecated compute_api_class
+    config option.  Otherwise, one could just access CONF.cells.enable and
+    CONF.cells.cell_type directly.
+    """
+    if not CONF.cells.enable:
+        return
+    cell_type = CONF.cells.cell_type
+    if cell_type:
+        if cell_type == 'api' or cell_type == 'compute':
+            return cell_type
+*1
+
+compute[1]:api.new()
 servers:resource.new(controller)

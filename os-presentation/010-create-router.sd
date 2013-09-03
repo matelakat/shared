@@ -1,13 +1,13 @@
 #!>>
-#!Describes how an API server is started, demonstrated through n-api
+#!Describes how a WSGI server is started through nova-api
 #!<<
 
 #![Start an API server]
 
 user:User[a]
 cmd_api:nova.cmd.api[a]
-/wsgiservice:service.WSGIService[a]
-/loader:wsgi.Loader[a]
+/wsgiservice:nova.service.WSGIService[a]
+/loader:nova.wsgi.Loader[a]
 deploy:paste.deploy[a]
 
 user:cmd_api.main()
