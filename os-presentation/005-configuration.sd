@@ -1,0 +1,11 @@
+user:User[a]
+cmd_api:nova.cmd.api[a]
+config:nova.config[a]
+/CONF:oslo.config.cfg.ConfigOpts
+/wsgiservice:nova.service.WSGIService[a]
+/loader:nova.wsgi.Loader[a]
+
+user:cmd_api.main()
+cmd_api:CONF.new()
+cmd_api:config.parse_args(sys.argv)
+config:CONF.__call__(argv[1:])

@@ -12,7 +12,8 @@
 
 #![Create servers controller]
 
-router:nova.api.openstack.compute:APIRouter[a]
+paster:Actor
+/router:nova.api.openstack.compute:APIRouter[a]
 servers:nova.api.openstack.compute.servers[a]
 /controller:nova.api.openstack.compute.servers.Controller
 compute:nova.compute[a]
@@ -20,6 +21,8 @@ cellopts:nova.cell.opts[a]
 /api:nova.compute.api.API
 /resource:nova.api.openstack.wsgi.Resource
 
+paster:router.new()
+router:router._setup_routes(...)
 router:resource=servers.create_resource()
 servers:controller.new()
 controller:compute_api=compute.API()

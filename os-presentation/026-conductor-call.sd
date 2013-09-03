@@ -1,0 +1,26 @@
+#!>>
+#!Show how nova API makes calls to conductor
+#!
+#!<<
+
+#![Making calls to the conductor]
+web:r "Web framework"
+controller:nova.api.openstack.compute.servers.Controller[a]
+ctapi:nova.conductor.ComputeTaskAPI[a]
+lctapi:nova.conductor.LocalComputeTaskAPI[a]
+rpcapi:nova.conductor.rpcapi.ComputeTaskAPI[a]
+mgr:nova.conductor.manager.ComputeTaskManager[a]
+
+[c: non-local conductor (default)]
+web:controller.create(request, body)
+controller:ctapi.build_instances(...)
+ctapi:rpcapi.build_instances(...)
+rpcapi:rpcapi.make_msg('build_instances')
+rpcapi:mgr.build_instances(...)
+[/c]
+
+[c: local conductor]
+web:controller.create(request, body)
+controller:lctapi.build_instances(...)
+lctapi:mgr.build_instances(...)
+[/c]

@@ -4,7 +4,7 @@
 
 #![Start an API server]
 
-user:User[a]
+user:Actor
 cmd_api:nova.cmd.api[a]
 /wsgiservice:nova.service.WSGIService[a]
 /loader:nova.wsgi.Loader[a]

@@ -1,0 +1,22 @@
+#!>>
+#!Show the conductor's initialisation
+#!
+#! The conductor does not have to live in a separate process. It can also live within the 
+#! api process.
+#!
+#! If conductor.use_local is False (the default value), then 
+#!    nova.conductor.api.ComputeTaskAPI
+#! otherwise
+#!    nova.conductor.api.LocalComputeTaskAPI
+#! will be instantiated.
+#!<<
+
+#![Default sequence (non-local conductor)]
+a:Actor
+api:nova.compute.api.API
+conductor:nova.conductor
+/capi:nova.conductor.api.ComputeTaskAPI
+
+a:api.compute_task_api
+api:conductor.ComputeTaskAPI()
+conductor:capi.new()

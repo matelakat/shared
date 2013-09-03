@@ -1,0 +1,14 @@
+#![Build an instance]
+framework:Actor
+cmgr:nova.conductor.manager.ComputeTaskManager[a]
+scheduler:nova.scheduler.manager.SchedulerManager[a]
+fsched:nova.scheduler.filter_scheduler.FilterScheduler[a]
+compute:nova.compute.manager.ComputeManager[a]
+driver:nova.virt.xenapi.driver.XenAPIDriver[a]
+
+framework:cmgr.build_instances(...)
+cmgr:scheduler.RPC\:run_instance(...)
+scheduler:fsched.schedule_run_instance(...)
+fsched:fsched._providion_resource(host, ...)
+fsched:compute.RPC\:run_instance(...)
+compute:driver.spawn(...)
